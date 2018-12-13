@@ -61,14 +61,14 @@ define('DISALLOW_FILE_EDIT', true);
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         'put your unique phrase here');
-define('SECURE_AUTH_KEY',  'put your unique phrase here');
-define('LOGGED_IN_KEY',    'put your unique phrase here');
-define('NONCE_KEY',        'put your unique phrase here');
-define('AUTH_SALT',        'put your unique phrase here');
-define('SECURE_AUTH_SALT', 'put your unique phrase here');
-define('LOGGED_IN_SALT',   'put your unique phrase here');
-define('NONCE_SALT',       'put your unique phrase here');
+define('AUTH_KEY',         getenv('SECRET_AUTH_KEY'));
+define('SECURE_AUTH_KEY',  getenv('SECRET_SECURE_AUTH_KEY'));
+define('LOGGED_IN_KEY',    getenv('SECRET_LOGGED_IN_KEY'));
+define('NONCE_KEY',        getenv('SECRET_NONCE_KEY'));
+define('AUTH_SALT',        getenv('SECRET_AUTH_SALT'));
+define('SECURE_AUTH_SALT', getenv('SECRET_SECURE_AUTH_SALT'));
+define('LOGGED_IN_SALT',   getenv('SECRET_LOGGED_IN_SALT'));
+define('NONCE_SALT',       getenv('SECRET_NONCE_SALT'));
 
 /**#@-*/
 
@@ -96,6 +96,14 @@ define('WP_DEBUG', false);
 
 /* That's all, stop editing! Happy blogging. */
 
+/** SSL */  
+define('FORCE_SSL_ADMIN', true);  
+// in some setups HTTP_X_FORWARDED_PROTO might contain  
+// a comma-separated list e.g. http,https  
+// so check for https existence  
+if (strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false)  
+	$_SERVER['HTTPS']='on';
+	
 //Relative URLs for swapping across app service deployment slots 
 define('WP_HOME', 'http://'. filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_STRING));
 define('WP_SITEURL', 'http://'. filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_STRING));
